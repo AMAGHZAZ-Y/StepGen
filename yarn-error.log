@@ -1,0 +1,54 @@
+Arguments: 
+  /home/kurhnel/.nvm/versions/node/v18.12.0/bin/node /home/kurhnel/.cache/node/corepack/yarn/1.22.19/bin/yarn.js
+
+PATH: 
+  /home/kurhnel/.local/share/pnpm:/home/kurhnel/.local/share/pnpm:/home/kurhnel/.nvm/versions/node/v18.12.0/bin:/home/kurhnel/.cargo/bin:/home/kurhnel/.local/share/pnpm:/home/kurhnel/.local/bin:/home/kurhnel/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/var/lib/snapd/snap/bin:/usr/local/go/bin:/home/kurhnel/.dotnet/tools:/usr/local/go/bin:/home/kurhnel/.local/share/JetBrains/Toolbox/scripts:/usr/local/go/bin:/usr/local/go/bin:/home/kurhnel/.local/share/JetBrains/Toolbox/scripts:/usr/local/go/bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  18.12.0
+
+Platform: 
+  linux x64
+
+Trace: 
+  Error: getaddrinfo EAI_AGAIN registry.yarnpkg.com
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26)
+
+npm manifest: 
+  {
+    "name": "stepgen",
+    "version": "0.0.1",
+    "description": "Steps generator for Steppy",
+    "source": "src/index.html",
+    "scripts": {
+      "start": "parcel",
+      "build": "parcel build"
+    },
+    "license": "MIT",
+    "devDependencies": {
+      "@types/react": "^18.0.25",
+      "@types/react-dom": "^18.0.9",
+      "parcel": "^2.8.0",
+      "process": "^0.11.10",
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0",
+      "typescript": "^4.9.3",
+      "@chakra-ui/react": "^2.4.1",
+      "@emotion/react": "^11.10.5",
+      "@emotion/styled": "^11.10.5",
+      "framer-motion": "^7.6.9"
+    },
+    "engines": {
+      "parcel": "2.x"
+    },
+    "dependencies": {}
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

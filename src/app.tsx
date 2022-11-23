@@ -1,10 +1,14 @@
+import { ChakraProvider } from "@chakra-ui/react"
 import React from "react"
+import ToolKit from "./components/toolkit"
+import TopBar from "./components/topbar"
 
 const App = () => {
 	return (
-		<div>
-			hello
-		</div>
+		<ChakraProvider>
+			<TopBar />
+			<ToolKit />
+		</ChakraProvider>
 	)
 }
 

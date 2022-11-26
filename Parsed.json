@@ -1,0 +1,10 @@
+{
+	"Move": {
+		"X": "number",
+		"Y": "number"
+	},
+	"Rotate": {
+		"X": "number",
+		"Y": "number"
+	}
+}

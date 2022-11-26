@@ -1,0 +1,28 @@
+[
+	{
+		"Func": "Move",
+		"Args": [
+			{
+				"Input": "X",
+				"Type": "number"
+			},
+			{
+				"Input": "Y",
+				"Type": "number"
+			}
+		]
+	},
+	{
+		"Func": "Rotate",
+		"Args": [
+			{
+				"Input": "X",
+				"Type": "number"
+			},
+			{
+				"Input": "Y",
+				"Type": "number"
+			}
+		]
+	}
+]

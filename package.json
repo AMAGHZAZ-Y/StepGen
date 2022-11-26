@@ -25,6 +25,7 @@
     "parcel": "2.x"
   },
   "dependencies": {
-    "@types/node": "^18.11.9"
+    "@types/node": "^18.11.9",
+    "zustand": "^4.1.4"
   }
 }

@@ -27117,6 +27117,8 @@ var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("@chakra-ui/react");
 var _react1 = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react1);
+var _lines = require("./components/lines");
+var _linesDefault = parcelHelpers.interopDefault(_lines);
 var _toolkit = require("./components/toolkit");
 var _toolkitDefault = parcelHelpers.interopDefault(_toolkit);
 var _topbar = require("./components/topbar");
@@ -27126,18 +27128,23 @@ const App = ()=>{
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _topbarDefault.default), {}, void 0, false, {
                 fileName: "src/app.tsx",
-                lineNumber: 9,
+                lineNumber: 10,
                 columnNumber: 4
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _toolkitDefault.default), {}, void 0, false, {
                 fileName: "src/app.tsx",
-                lineNumber: 10,
+                lineNumber: 11,
+                columnNumber: 4
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _linesDefault.default), {}, void 0, false, {
+                fileName: "src/app.tsx",
+                lineNumber: 12,
                 columnNumber: 4
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/app.tsx",
-        lineNumber: 8,
+        lineNumber: 9,
         columnNumber: 3
     }, undefined);
 };
@@ -27151,7 +27158,7 @@ $RefreshReg$(_c, "App");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","./components/topbar":"coqHx","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","@chakra-ui/react":"dTH6q","./components/toolkit":"2XcIa"}],"coqHx":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","./components/topbar":"coqHx","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","@chakra-ui/react":"dTH6q","./components/toolkit":"2XcIa","./components/lines":"bY16q"}],"coqHx":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$3c4e = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -70897,39 +70904,34 @@ var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("@chakra-ui/react");
 var _react1 = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react1);
-var _stepstore = require("./stepstore");
+var _stores = require("./stores");
 var _icons = require("../icons/icons");
-var _s = $RefreshSig$();
+var _adapter = require("./adapter");
+var _s = $RefreshSig$(), _s1 = $RefreshSig$();
 const AddBtn = ()=>{
-    let step;
-    const click = ()=>{
-        (0, _stepstore.StepStore).push(step);
-        console.log((0, _stepstore.StepStore));
-    };
+    _s();
+    const [Step, setStep] = (0, _react1.useState)();
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.IconButton), {
-        onClick: click,
-        "aria-label": "Add Button",
-        icon: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _icons.PlusIcon), {}, void 0, false, void 0, void 0)
+        icon: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _icons.PlusIcon), {}, void 0, false, void 0, void 0),
+        "aria-label": "add line"
     }, void 0, false, {
         fileName: "src/stepcore/buttons.tsx",
-        lineNumber: 15,
+        lineNumber: 9,
         columnNumber: 3
     }, undefined);
 };
+_s(AddBtn, "Bn7i9JkG7ta+5aXidad2xp1xpJ4=");
 _c = AddBtn;
 const DeleteBtn = ()=>{
     let step;
-    const click = ()=>{
-        (0, _stepstore.StepStore).pop();
-        console.log((0, _stepstore.StepStore));
-    };
+    const click = ()=>{};
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.IconButton), {
         onClick: click,
         "aria-label": "Delete Button",
         icon: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _icons.DeleteIcon), {}, void 0, false, void 0, void 0)
     }, void 0, false, {
         fileName: "src/stepcore/buttons.tsx",
-        lineNumber: 28,
+        lineNumber: 19,
         columnNumber: 3
     }, undefined);
 };
@@ -70939,21 +70941,46 @@ const GenerateBtn = ()=>{
         children: "Generate"
     }, void 0, false, {
         fileName: "src/stepcore/buttons.tsx",
-        lineNumber: 34,
+        lineNumber: 25,
         columnNumber: 3
     }, undefined);
 };
 _c2 = GenerateBtn;
 const UploadBtn = ()=>{
-    _s();
+    _s1();
     const { isOpen , onOpen , onClose  } = (0, _react.useDisclosure)();
+    const [File, setFile] = (0, _react1.useState)();
+    const [Loaded, setLoaded] = (0, _react1.useState)(false);
+    let toast = (0, _react.useToast)();
+    const handleUpload = (event)=>{
+        const reader = new FileReader();
+        reader.onloadend = ()=>{
+            setFile(reader.result);
+            setLoaded(true);
+        };
+        reader.readAsText(event.target.files[0]);
+    };
+    const handleSubmit = ()=>{
+        (0, _stores.StepStore).setState((state)=>({
+                Schema: JSON.parse(File)
+            }));
+        (0, _adapter.ParseSchema)();
+        toast({
+            duration: 2500,
+            title: "Upload Status",
+            description: "The Schema File has been uploaded successfully",
+            status: "success"
+        });
+        onClose();
+    };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.Button), {
+                onClick: onOpen,
                 children: "Upload"
             }, void 0, false, {
                 fileName: "src/stepcore/buttons.tsx",
-                lineNumber: 45,
+                lineNumber: 59,
                 columnNumber: 4
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.Modal), {
@@ -70962,7 +70989,7 @@ const UploadBtn = ()=>{
                 children: [
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.ModalOverlay), {}, void 0, false, {
                         fileName: "src/stepcore/buttons.tsx",
-                        lineNumber: 47,
+                        lineNumber: 61,
                         columnNumber: 5
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.ModalContent), {
@@ -70971,59 +70998,73 @@ const UploadBtn = ()=>{
                                 children: "Upload Schema"
                             }, void 0, false, {
                                 fileName: "src/stepcore/buttons.tsx",
-                                lineNumber: 49,
+                                lineNumber: 63,
                                 columnNumber: 6
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.ModalCloseButton), {}, void 0, false, {
                                 fileName: "src/stepcore/buttons.tsx",
-                                lineNumber: 52,
+                                lineNumber: 66,
                                 columnNumber: 6
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.ModalBody), {
-                                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.Input), {
-                                    type: "file",
-                                    placeholder: "Select"
-                                }, void 0, false, {
-                                    fileName: "src/stepcore/buttons.tsx",
-                                    lineNumber: 54,
-                                    columnNumber: 7
-                                }, undefined)
-                            }, void 0, false, {
+                                children: [
+                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.Text), {
+                                        p: "0.5rem",
+                                        children: "Please select your schema from your filesystem"
+                                    }, void 0, false, {
+                                        fileName: "src/stepcore/buttons.tsx",
+                                        lineNumber: 68,
+                                        columnNumber: 7
+                                    }, undefined),
+                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.Input), {
+                                        type: "file",
+                                        placeholder: "Select",
+                                        onChange: handleUpload
+                                    }, void 0, false, {
+                                        fileName: "src/stepcore/buttons.tsx",
+                                        lineNumber: 69,
+                                        columnNumber: 7
+                                    }, undefined)
+                                ]
+                            }, void 0, true, {
                                 fileName: "src/stepcore/buttons.tsx",
-                                lineNumber: 53,
+                                lineNumber: 67,
                                 columnNumber: 6
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.ModalFooter), {
                                 children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.Button), {
+                                    onClick: handleSubmit,
+                                    disabled: !Loaded,
                                     children: "Submit"
                                 }, void 0, false, {
                                     fileName: "src/stepcore/buttons.tsx",
-                                    lineNumber: 57,
+                                    lineNumber: 72,
                                     columnNumber: 7
                                 }, undefined)
                             }, void 0, false, {
                                 fileName: "src/stepcore/buttons.tsx",
-                                lineNumber: 56,
+                                lineNumber: 71,
                                 columnNumber: 6
                             }, undefined)
                         ]
                     }, void 0, true, {
                         fileName: "src/stepcore/buttons.tsx",
-                        lineNumber: 48,
+                        lineNumber: 62,
                         columnNumber: 5
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/stepcore/buttons.tsx",
-                lineNumber: 46,
+                lineNumber: 60,
                 columnNumber: 4
             }, undefined)
         ]
     }, void 0, true);
 };
-_s(UploadBtn, "b6HgRGUKK6FEfELRcVwOTS4RtgI=", false, function() {
+_s1(UploadBtn, "a3Q+2iOZFrXNQ2VJEuOtxhgPIg0=", false, function() {
     return [
-        (0, _react.useDisclosure)
+        (0, _react.useDisclosure),
+        (0, _react.useToast)
     ];
 });
 _c3 = UploadBtn;
@@ -71032,7 +71073,7 @@ const SimulateBtn = ()=>{
         children: "Simulate"
     }, void 0, false, {
         fileName: "src/stepcore/buttons.tsx",
-        lineNumber: 66,
+        lineNumber: 81,
         columnNumber: 3
     }, undefined);
 };
@@ -71049,12 +71090,439 @@ $RefreshReg$(_c4, "SimulateBtn");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","@chakra-ui/react":"dTH6q","react":"21dqq","./stepstore":"3S7WA","../icons/icons":"8Fw3R","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"3S7WA":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","@chakra-ui/react":"dTH6q","react":"21dqq","../icons/icons":"8Fw3R","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./stores":"bm3jH","./adapter":"376nN"}],"bm3jH":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Schema", ()=>Schema);
 parcelHelpers.export(exports, "StepStore", ()=>StepStore);
-const StepStore = [];
+var _zustand = require("zustand");
+var _zustandDefault = parcelHelpers.interopDefault(_zustand);
+const Schema = [];
+const StepStore = (0, _zustandDefault.default)((set, get)=>({
+        Schema: [],
+        ParsedSchema: [],
+        StepCount: 0,
+        Steps: [],
+        Push: (step)=>set((state)=>({
+                    Steps: [
+                        ...state.Steps,
+                        step
+                    ]
+                })),
+        Pop: ()=>set((state)=>({
+                    Steps: state.Steps.splice(1)
+                }))
+    }));
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["1xC6H","6FqiZ","4aBH6"], "4aBH6", "parcelRequire54f8")
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","zustand":"cPNyt"}],"cPNyt":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var createStore = require("zustand/vanilla");
+var react = require("react");
+var useSyncExternalStoreExports = require("use-sync-external-store/shim/with-selector");
+var useSyncExternalStoreWithSelector = useSyncExternalStoreExports.useSyncExternalStoreWithSelector;
+function useStore(api, selector, equalityFn) {
+    if (selector === void 0) selector = api.getState;
+    var slice = useSyncExternalStoreWithSelector(api.subscribe, api.getState, api.getServerState || api.getState, selector, equalityFn);
+    react.useDebugValue(slice);
+    return slice;
+}
+var createImpl = function createImpl(createState) {
+    var api = typeof createState === "function" ? createStore(createState) : createState;
+    var useBoundStore = function useBoundStore(selector, equalityFn) {
+        return useStore(api, selector, equalityFn);
+    };
+    Object.assign(useBoundStore, api);
+    return useBoundStore;
+};
+var create = function create(createState) {
+    return createState ? createImpl(createState) : createImpl;
+};
+var create$1 = create;
+exports.createStore = createStore;
+exports.default = create$1;
+exports.useStore = useStore;
+Object.keys(createStore).forEach(function(k) {
+    if (k !== "default" && !exports.hasOwnProperty(k)) Object.defineProperty(exports, k, {
+        enumerable: true,
+        get: function() {
+            return createStore[k];
+        }
+    });
+});
+
+},{"zustand/vanilla":"2SLIN","react":"21dqq","use-sync-external-store/shim/with-selector":"iDrhg"}],"2SLIN":[function(require,module,exports) {
+"use strict";
+var createStoreImpl = function createStoreImpl(createState) {
+    var state;
+    var listeners = new Set();
+    var setState = function setState(partial, replace) {
+        var nextState = typeof partial === "function" ? partial(state) : partial;
+        if (!Object.is(nextState, state)) {
+            var _previousState = state;
+            state = (replace != null ? replace : typeof nextState !== "object") ? nextState : Object.assign({}, state, nextState);
+            listeners.forEach(function(listener) {
+                return listener(state, _previousState);
+            });
+        }
+    };
+    var getState = function getState() {
+        return state;
+    };
+    var subscribe = function subscribe(listener) {
+        listeners.add(listener);
+        return function() {
+            return listeners.delete(listener);
+        };
+    };
+    var destroy = function destroy() {
+        return listeners.clear();
+    };
+    var api = {
+        setState: setState,
+        getState: getState,
+        subscribe: subscribe,
+        destroy: destroy
+    };
+    state = createState(setState, getState, api);
+    return api;
+};
+var createStore = function createStore(createState) {
+    return createState ? createStoreImpl(createState) : createStoreImpl;
+};
+module.exports = createStore;
+
+},{}],"iDrhg":[function(require,module,exports) {
+"use strict";
+module.exports = require("../cjs/use-sync-external-store-shim/with-selector.development.js");
+
+},{"../cjs/use-sync-external-store-shim/with-selector.development.js":"vU6Qe"}],"vU6Qe":[function(require,module,exports) {
+/**
+ * @license React
+ * use-sync-external-store-shim/with-selector.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */ "use strict";
+(function() {
+    "use strict";
+    /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */ if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
+    var React = require("react");
+    var shim = require("use-sync-external-store/shim");
+    /**
+ * inlined Object.is polyfill to avoid requiring consumers ship their own
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+ */ function is(x, y) {
+        return x === y && (x !== 0 || 1 / x === 1 / y) || x !== x && y !== y // eslint-disable-line no-self-compare
+        ;
+    }
+    var objectIs = typeof Object.is === "function" ? Object.is : is;
+    var useSyncExternalStore = shim.useSyncExternalStore;
+    // for CommonJS interop.
+    var useRef = React.useRef, useEffect = React.useEffect, useMemo = React.useMemo, useDebugValue = React.useDebugValue; // Same as useSyncExternalStore, but supports selector and isEqual arguments.
+    function useSyncExternalStoreWithSelector(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
+        // Use this to track the rendered snapshot.
+        var instRef = useRef(null);
+        var inst;
+        if (instRef.current === null) {
+            inst = {
+                hasValue: false,
+                value: null
+            };
+            instRef.current = inst;
+        } else inst = instRef.current;
+        var _useMemo = useMemo(function() {
+            // Track the memoized state using closure variables that are local to this
+            // memoized instance of a getSnapshot function. Intentionally not using a
+            // useRef hook, because that state would be shared across all concurrent
+            // copies of the hook/component.
+            var hasMemo = false;
+            var memoizedSnapshot;
+            var memoizedSelection;
+            var memoizedSelector = function(nextSnapshot) {
+                if (!hasMemo) {
+                    // The first time the hook is called, there is no memoized result.
+                    hasMemo = true;
+                    memoizedSnapshot = nextSnapshot;
+                    var _nextSelection = selector(nextSnapshot);
+                    if (isEqual !== undefined) // Even if the selector has changed, the currently rendered selection
+                    // may be equal to the new selection. We should attempt to reuse the
+                    // current value if possible, to preserve downstream memoizations.
+                    {
+                        if (inst.hasValue) {
+                            var currentSelection = inst.value;
+                            if (isEqual(currentSelection, _nextSelection)) {
+                                memoizedSelection = currentSelection;
+                                return currentSelection;
+                            }
+                        }
+                    }
+                    memoizedSelection = _nextSelection;
+                    return _nextSelection;
+                } // We may be able to reuse the previous invocation's result.
+                // We may be able to reuse the previous invocation's result.
+                var prevSnapshot = memoizedSnapshot;
+                var prevSelection = memoizedSelection;
+                if (objectIs(prevSnapshot, nextSnapshot)) // The snapshot is the same as last time. Reuse the previous selection.
+                return prevSelection;
+                 // The snapshot has changed, so we need to compute a new selection.
+                // The snapshot has changed, so we need to compute a new selection.
+                var nextSelection = selector(nextSnapshot); // If a custom isEqual function is provided, use that to check if the data
+                // has changed. If it hasn't, return the previous selection. That signals
+                // to React that the selections are conceptually equal, and we can bail
+                // out of rendering.
+                // If a custom isEqual function is provided, use that to check if the data
+                // has changed. If it hasn't, return the previous selection. That signals
+                // to React that the selections are conceptually equal, and we can bail
+                // out of rendering.
+                if (isEqual !== undefined && isEqual(prevSelection, nextSelection)) return prevSelection;
+                memoizedSnapshot = nextSnapshot;
+                memoizedSelection = nextSelection;
+                return nextSelection;
+            }; // Assigning this to a constant so that Flow knows it can't change.
+            // Assigning this to a constant so that Flow knows it can't change.
+            var maybeGetServerSnapshot = getServerSnapshot === undefined ? null : getServerSnapshot;
+            var getSnapshotWithSelector = function() {
+                return memoizedSelector(getSnapshot());
+            };
+            var getServerSnapshotWithSelector = maybeGetServerSnapshot === null ? undefined : function() {
+                return memoizedSelector(maybeGetServerSnapshot());
+            };
+            return [
+                getSnapshotWithSelector,
+                getServerSnapshotWithSelector
+            ];
+        }, [
+            getSnapshot,
+            getServerSnapshot,
+            selector,
+            isEqual
+        ]), getSelection = _useMemo[0], getServerSelection = _useMemo[1];
+        var value = useSyncExternalStore(subscribe, getSelection, getServerSelection);
+        useEffect(function() {
+            inst.hasValue = true;
+            inst.value = value;
+        }, [
+            value
+        ]);
+        useDebugValue(value);
+        return value;
+    }
+    exports.useSyncExternalStoreWithSelector = useSyncExternalStoreWithSelector;
+    /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */ if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop === "function") __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
+})();
+
+},{"react":"21dqq","use-sync-external-store/shim":"hyxdF"}],"hyxdF":[function(require,module,exports) {
+"use strict";
+module.exports = require("../cjs/use-sync-external-store-shim.development.js");
+
+},{"../cjs/use-sync-external-store-shim.development.js":"khU3l"}],"khU3l":[function(require,module,exports) {
+/**
+ * @license React
+ * use-sync-external-store-shim.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */ "use strict";
+(function() {
+    "use strict";
+    /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */ if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
+    var React = require("react");
+    var ReactSharedInternals = React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+    function error(format) {
+        for(var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++)args[_key2 - 1] = arguments[_key2];
+        printWarning("error", format, args);
+    }
+    function printWarning(level, format, args) {
+        var ReactDebugCurrentFrame = ReactSharedInternals.ReactDebugCurrentFrame;
+        var stack = ReactDebugCurrentFrame.getStackAddendum();
+        if (stack !== "") {
+            format += "%s";
+            args = args.concat([
+                stack
+            ]);
+        } // eslint-disable-next-line react-internal/safe-string-coercion
+        var argsWithFormat = args.map(function(item) {
+            return String(item);
+        }); // Careful: RN currently depends on this prefix
+        argsWithFormat.unshift("Warning: " + format); // We intentionally don't use spread (or .apply) directly because it
+        // breaks IE9: https://github.com/facebook/react/issues/13610
+        // eslint-disable-next-line react-internal/no-production-logging
+        Function.prototype.apply.call(console[level], console, argsWithFormat);
+    }
+    /**
+ * inlined Object.is polyfill to avoid requiring consumers ship their own
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+ */ function is(x, y) {
+        return x === y && (x !== 0 || 1 / x === 1 / y) || x !== x && y !== y // eslint-disable-line no-self-compare
+        ;
+    }
+    var objectIs = typeof Object.is === "function" ? Object.is : is;
+    // dispatch for CommonJS interop named imports.
+    var useState = React.useState, useEffect = React.useEffect, useLayoutEffect = React.useLayoutEffect, useDebugValue = React.useDebugValue;
+    var didWarnOld18Alpha = false;
+    var didWarnUncachedGetSnapshot = false; // Disclaimer: This shim breaks many of the rules of React, and only works
+    // because of a very particular set of implementation details and assumptions
+    // -- change any one of them and it will break. The most important assumption
+    // is that updates are always synchronous, because concurrent rendering is
+    // only available in versions of React that also have a built-in
+    // useSyncExternalStore API. And we only use this shim when the built-in API
+    // does not exist.
+    //
+    // Do not assume that the clever hacks used by this hook also work in general.
+    // The point of this shim is to replace the need for hacks by other libraries.
+    function useSyncExternalStore(subscribe, getSnapshot, // React do not expose a way to check if we're hydrating. So users of the shim
+    // will need to track that themselves and return the correct value
+    // from `getSnapshot`.
+    getServerSnapshot) {
+        if (!didWarnOld18Alpha) {
+            if (React.startTransition !== undefined) {
+                didWarnOld18Alpha = true;
+                error("You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release.");
+            }
+        }
+        // breaks the rules of React, and only works here because of specific
+        // implementation details, most importantly that updates are
+        // always synchronous.
+        var value = getSnapshot();
+        if (!didWarnUncachedGetSnapshot) {
+            var cachedValue = getSnapshot();
+            if (!objectIs(value, cachedValue)) {
+                error("The result of getSnapshot should be cached to avoid an infinite loop");
+                didWarnUncachedGetSnapshot = true;
+            }
+        }
+        // re-render whenever the subscribed state changes by updating an some
+        // arbitrary useState hook. Then, during render, we call getSnapshot to read
+        // the current value.
+        //
+        // Because we don't actually use the state returned by the useState hook, we
+        // can save a bit of memory by storing other stuff in that slot.
+        //
+        // To implement the early bailout, we need to track some things on a mutable
+        // object. Usually, we would put that in a useRef hook, but we can stash it in
+        // our useState hook instead.
+        //
+        // To force a re-render, we call forceUpdate({inst}). That works because the
+        // new object always fails an equality check.
+        var _useState = useState({
+            inst: {
+                value: value,
+                getSnapshot: getSnapshot
+            }
+        }), inst = _useState[0].inst, forceUpdate = _useState[1]; // Track the latest getSnapshot function with a ref. This needs to be updated
+        // in the layout phase so we can access it during the tearing check that
+        // happens on subscribe.
+        useLayoutEffect(function() {
+            inst.value = value;
+            inst.getSnapshot = getSnapshot; // Whenever getSnapshot or subscribe changes, we need to check in the
+            // commit phase if there was an interleaved mutation. In concurrent mode
+            // this can happen all the time, but even in synchronous mode, an earlier
+            // effect may have mutated the store.
+            if (checkIfSnapshotChanged(inst)) // Force a re-render.
+            forceUpdate({
+                inst: inst
+            });
+        }, [
+            subscribe,
+            value,
+            getSnapshot
+        ]);
+        useEffect(function() {
+            // Check for changes right before subscribing. Subsequent changes will be
+            // detected in the subscription handler.
+            if (checkIfSnapshotChanged(inst)) // Force a re-render.
+            forceUpdate({
+                inst: inst
+            });
+            var handleStoreChange = function() {
+                // TODO: Because there is no cross-renderer API for batching updates, it's
+                // up to the consumer of this library to wrap their subscription event
+                // with unstable_batchedUpdates. Should we try to detect when this isn't
+                // the case and print a warning in development?
+                // The store changed. Check if the snapshot changed since the last time we
+                // read from the store.
+                if (checkIfSnapshotChanged(inst)) // Force a re-render.
+                forceUpdate({
+                    inst: inst
+                });
+            }; // Subscribe to the store and return a clean-up function.
+            return subscribe(handleStoreChange);
+        }, [
+            subscribe
+        ]);
+        useDebugValue(value);
+        return value;
+    }
+    function checkIfSnapshotChanged(inst) {
+        var latestGetSnapshot = inst.getSnapshot;
+        var prevValue = inst.value;
+        try {
+            var nextValue = latestGetSnapshot();
+            return !objectIs(prevValue, nextValue);
+        } catch (error) {
+            return true;
+        }
+    }
+    function useSyncExternalStore$1(subscribe, getSnapshot, getServerSnapshot) {
+        // Note: The shim does not use getServerSnapshot, because pre-18 versions of
+        // React do not expose a way to check if we're hydrating. So users of the shim
+        // will need to track that themselves and return the correct value
+        // from `getSnapshot`.
+        return getSnapshot();
+    }
+    var canUseDOM = !!(typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined");
+    var isServerEnvironment = !canUseDOM;
+    var shim = isServerEnvironment ? useSyncExternalStore$1 : useSyncExternalStore;
+    var useSyncExternalStore$2 = React.useSyncExternalStore !== undefined ? React.useSyncExternalStore : shim;
+    exports.useSyncExternalStore = useSyncExternalStore$2;
+    /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */ if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop === "function") __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
+})();
+
+},{"react":"21dqq"}],"376nN":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "ParseSchema", ()=>ParseSchema);
+var _stores = require("./stores");
+const ParseSchema = ()=>{
+    let schema = (0, _stores.StepStore).getState().Schema;
+    let parsed = [];
+    schema.map((e, i)=>{
+        let obj = e["Func"] == "Move" ? e[i] : null;
+    });
+};
+
+},{"./stores":"bm3jH","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bY16q":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$29f2 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$29f2.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+const Lines = ()=>{
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {}, void 0, false);
+};
+_c = Lines;
+exports.default = Lines;
+var _c;
+$RefreshReg$(_c, "Lines");
+
+  $parcel$ReactRefreshHelpers$29f2.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}]},["1xC6H","6FqiZ","4aBH6"], "4aBH6", "parcelRequire54f8")
 
 //# sourceMappingURL=index.2d3ace14.js.map

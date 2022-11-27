@@ -20,5 +20,22 @@
 				"Type": "number"
 			}
 		]
+	},
+	{
+		"Func": "Sleep",
+		"Args": [
+			{
+				"Input": "When",
+				"Type": "number"
+			},
+			{
+				"Input": "Sleep With",
+				"Type": "text"
+			},
+			{
+				"Input": "Eat on Bed",
+				"Type": "boolean"
+			}
+		]
 	}
 ]

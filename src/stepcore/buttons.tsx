@@ -46,6 +46,7 @@ export const UploadBtn = () => {
 		const reader = new FileReader();
 		reader.onloadend = () => {
 			setFile(reader.result as string)
+			localStorage.setItem("schema", reader.result as string)
 			setLoaded(true);
 		}
 		reader.readAsText(event.target.files[0])

@@ -27119,32 +27119,67 @@ var _react1 = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react1);
 var _lines = require("./components/lines");
 var _linesDefault = parcelHelpers.interopDefault(_lines);
+var _output = require("./components/output");
+var _outputDefault = parcelHelpers.interopDefault(_output);
 var _toolkit = require("./components/toolkit");
 var _toolkitDefault = parcelHelpers.interopDefault(_toolkit);
 var _topbar = require("./components/topbar");
 var _topbarDefault = parcelHelpers.interopDefault(_topbar);
+var _stores = require("./stepcore/stores");
 const App = ()=>{
+    (0, _stores.StepStore).setState(()=>({
+            Schema: JSON.parse(localStorage.getItem("schema"))
+        }));
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.ChakraProvider), {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _topbarDefault.default), {}, void 0, false, {
                 fileName: "src/app.tsx",
-                lineNumber: 10,
+                lineNumber: 13,
                 columnNumber: 4
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _toolkitDefault.default), {}, void 0, false, {
                 fileName: "src/app.tsx",
-                lineNumber: 11,
+                lineNumber: 14,
                 columnNumber: 4
             }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _linesDefault.default), {}, void 0, false, {
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.Grid), {
+                templateColumns: "1fr 1fr",
+                gap: "1rem",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.GridItem), {
+                        colStart: 1,
+                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _linesDefault.default), {}, void 0, false, {
+                            fileName: "src/app.tsx",
+                            lineNumber: 17,
+                            columnNumber: 6
+                        }, undefined)
+                    }, void 0, false, {
+                        fileName: "src/app.tsx",
+                        lineNumber: 16,
+                        columnNumber: 5
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.GridItem), {
+                        colStart: 2,
+                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _outputDefault.default), {}, void 0, false, {
+                            fileName: "src/app.tsx",
+                            lineNumber: 20,
+                            columnNumber: 6
+                        }, undefined)
+                    }, void 0, false, {
+                        fileName: "src/app.tsx",
+                        lineNumber: 19,
+                        columnNumber: 5
+                    }, undefined)
+                ]
+            }, void 0, true, {
                 fileName: "src/app.tsx",
-                lineNumber: 12,
+                lineNumber: 15,
                 columnNumber: 4
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/app.tsx",
-        lineNumber: 9,
+        lineNumber: 12,
         columnNumber: 3
     }, undefined);
 };
@@ -27158,7 +27193,7 @@ $RefreshReg$(_c, "App");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","./components/topbar":"coqHx","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","@chakra-ui/react":"dTH6q","./components/toolkit":"2XcIa","./components/lines":"bY16q"}],"coqHx":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","./components/topbar":"coqHx","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","@chakra-ui/react":"dTH6q","./components/toolkit":"2XcIa","./components/lines":"bY16q","./stepcore/stores":"bm3jH","./components/output":"lBoXk"}],"coqHx":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$3c4e = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -27172,21 +27207,17 @@ var _react = require("@chakra-ui/react");
 var _react1 = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react1);
 var _icons = require("../icons/icons");
+var _s = $RefreshSig$();
 const TopBar = ()=>{
+    _s();
+    const { colorMode , toggleColorMode  } = (0, _react.useColorMode)();
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.Flex), {
         dir: "row",
-        justify: "space-evenly",
         align: "center",
+        justifyContent: "space-between",
         p: "0.5rem",
+        bg: "blackAlpha.300",
         children: [
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.Text), {
-                fontSize: "2xl",
-                children: "UNIMAKERS"
-            }, void 0, false, {
-                fileName: "src/components/topbar.tsx",
-                lineNumber: 7,
-                columnNumber: 4
-            }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.Text), {
                 fontSize: "2xl",
                 fontWeight: "bold",
@@ -27197,8 +27228,9 @@ const TopBar = ()=>{
                 columnNumber: 4
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.IconButton), {
+                onClick: toggleColorMode,
                 "aria-label": "light switch",
-                icon: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _icons.SunIcon), {}, void 0, false, void 0, void 0)
+                icon: colorMode == "dark" ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _icons.SunIcon), {}, void 0, false, void 0, void 0) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _icons.MoonIcon), {}, void 0, false, void 0, void 0)
             }, void 0, false, {
                 fileName: "src/components/topbar.tsx",
                 lineNumber: 9,
@@ -27207,10 +27239,15 @@ const TopBar = ()=>{
         ]
     }, void 0, true, {
         fileName: "src/components/topbar.tsx",
-        lineNumber: 6,
+        lineNumber: 7,
         columnNumber: 3
     }, undefined);
 };
+_s(TopBar, "uURyIwMgIfFLStF4nJMrxbb6o/4=", false, function() {
+    return [
+        (0, _react.useColorMode)
+    ];
+});
 _c = TopBar;
 exports.default = TopBar;
 var _c;
@@ -70972,6 +71009,7 @@ const UploadBtn = ()=>{
         const reader = new FileReader();
         reader.onloadend = ()=>{
             setFile(reader.result);
+            localStorage.setItem("schema", reader.result);
             setLoaded(true);
         };
         reader.readAsText(event.target.files[0]);
@@ -70993,7 +71031,7 @@ const UploadBtn = ()=>{
                 children: "Upload"
             }, void 0, false, {
                 fileName: "src/stepcore/buttons.tsx",
-                lineNumber: 65,
+                lineNumber: 66,
                 columnNumber: 4
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.Modal), {
@@ -71002,7 +71040,7 @@ const UploadBtn = ()=>{
                 children: [
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.ModalOverlay), {}, void 0, false, {
                         fileName: "src/stepcore/buttons.tsx",
-                        lineNumber: 67,
+                        lineNumber: 68,
                         columnNumber: 5
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.ModalContent), {
@@ -71011,12 +71049,12 @@ const UploadBtn = ()=>{
                                 children: "Upload Schema"
                             }, void 0, false, {
                                 fileName: "src/stepcore/buttons.tsx",
-                                lineNumber: 69,
+                                lineNumber: 70,
                                 columnNumber: 6
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.ModalCloseButton), {}, void 0, false, {
                                 fileName: "src/stepcore/buttons.tsx",
-                                lineNumber: 72,
+                                lineNumber: 73,
                                 columnNumber: 6
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.ModalBody), {
@@ -71026,7 +71064,7 @@ const UploadBtn = ()=>{
                                         children: "Please select your schema from your filesystem"
                                     }, void 0, false, {
                                         fileName: "src/stepcore/buttons.tsx",
-                                        lineNumber: 74,
+                                        lineNumber: 75,
                                         columnNumber: 7
                                     }, undefined),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.Input), {
@@ -71035,13 +71073,13 @@ const UploadBtn = ()=>{
                                         onChange: handleUpload
                                     }, void 0, false, {
                                         fileName: "src/stepcore/buttons.tsx",
-                                        lineNumber: 75,
+                                        lineNumber: 76,
                                         columnNumber: 7
                                     }, undefined)
                                 ]
                             }, void 0, true, {
                                 fileName: "src/stepcore/buttons.tsx",
-                                lineNumber: 73,
+                                lineNumber: 74,
                                 columnNumber: 6
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.ModalFooter), {
@@ -71051,24 +71089,24 @@ const UploadBtn = ()=>{
                                     children: "Submit"
                                 }, void 0, false, {
                                     fileName: "src/stepcore/buttons.tsx",
-                                    lineNumber: 78,
+                                    lineNumber: 79,
                                     columnNumber: 7
                                 }, undefined)
                             }, void 0, false, {
                                 fileName: "src/stepcore/buttons.tsx",
-                                lineNumber: 77,
+                                lineNumber: 78,
                                 columnNumber: 6
                             }, undefined)
                         ]
                     }, void 0, true, {
                         fileName: "src/stepcore/buttons.tsx",
-                        lineNumber: 68,
+                        lineNumber: 69,
                         columnNumber: 5
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/stepcore/buttons.tsx",
-                lineNumber: 66,
+                lineNumber: 67,
                 columnNumber: 4
             }, undefined)
         ]
@@ -71086,7 +71124,7 @@ const SimulateBtn = ()=>{
         children: "Simulate"
     }, void 0, false, {
         fileName: "src/stepcore/buttons.tsx",
-        lineNumber: 87,
+        lineNumber: 88,
         columnNumber: 3
     }, undefined);
 };
@@ -71106,11 +71144,9 @@ $RefreshReg$(_c4, "SimulateBtn");
 },{"react/jsx-dev-runtime":"iTorj","@chakra-ui/react":"dTH6q","react":"21dqq","../icons/icons":"8Fw3R","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./stores":"bm3jH"}],"bm3jH":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Schema", ()=>Schema);
 parcelHelpers.export(exports, "StepStore", ()=>StepStore);
 var _zustand = require("zustand");
 var _zustandDefault = parcelHelpers.interopDefault(_zustand);
-const Schema = [];
 const StepStore = (0, _zustandDefault.default)((set, get)=>({
         Schema: [],
         Steps: [],
@@ -71514,27 +71550,20 @@ var _reactDefault = parcelHelpers.interopDefault(_react);
 var _stepline = require("../stepcore/stepline");
 var _steplineDefault = parcelHelpers.interopDefault(_stepline);
 var _stores = require("../stepcore/stores");
-var _s = $RefreshSig$();
 const Lines = ()=>{
-    _s();
-    const [Steps, setSteps] = (0, _stores.StepStore)((state)=>[
-            state.Steps,
-            state.Push
+    const [Steps] = (0, _stores.StepStore)((state)=>[
+            state.Steps
         ]);
-    (0, _react.useEffect)(()=>{
-        console.log(Steps);
-    });
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
         children: Steps.map((e, i)=>{
-            return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _steplineDefault.default), {}, void 0, false, {
+            return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _steplineDefault.default), {}, i, false, {
                 fileName: "src/components/lines.tsx",
-                lineNumber: 14,
+                lineNumber: 11,
                 columnNumber: 13
             }, undefined);
         })
     }, void 0, false);
 };
-_s(Lines, "OD7bBpZva5O2jO+Puf00hKivP7c=");
 _c = Lines;
 exports.default = Lines;
 var _c;
@@ -71571,13 +71600,12 @@ const StepLine = (props)=>{
     Schema.forEach((e)=>{
         Funcs.push(e["Func"]);
     });
-    (0, _react1.useEffect)(()=>{
-        console.log(Args);
-    });
     Schema.forEach((e)=>{
         if (Choice == e["Func"]) Args = e["Args"];
     });
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.Flex), {
+        gap: "0.2rem",
+        p: "0.2rem",
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.Select), {
                 placeholder: "Select Function",
@@ -71585,46 +71613,49 @@ const StepLine = (props)=>{
                 onChange: (e)=>{
                     setChoice(e.target.value);
                 },
+                variant: "filled",
                 children: Funcs.map((e, i)=>{
                     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
                         value: e,
                         children: e
-                    }, void 0, false, {
+                    }, i, false, {
                         fileName: "src/stepcore/stepline.tsx",
-                        lineNumber: 28,
-                        columnNumber: 15
+                        lineNumber: 24,
+                        columnNumber: 14
                     }, undefined);
                 })
             }, void 0, false, {
                 fileName: "src/stepcore/stepline.tsx",
-                lineNumber: 25,
-                columnNumber: 5
+                lineNumber: 21,
+                columnNumber: 4
             }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.InputGroup), {
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.Flex), {
+                gap: "0.2rem",
                 children: Args.map((e, i)=>{
                     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.Input), {
+                        variant: "outline",
                         placeholder: e["Input"],
                         type: e["Type"],
                         textAlign: "center"
-                    }, void 0, false, {
+                    }, i, false, {
                         fileName: "src/stepcore/stepline.tsx",
-                        lineNumber: 35,
-                        columnNumber: 15
+                        lineNumber: 31,
+                        columnNumber: 14
                     }, undefined);
                 })
             }, void 0, false, {
                 fileName: "src/stepcore/stepline.tsx",
-                lineNumber: 32,
-                columnNumber: 5
+                lineNumber: 28,
+                columnNumber: 4
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/stepcore/stepline.tsx",
-        lineNumber: 24,
-        columnNumber: 4
+        lineNumber: 20,
+        columnNumber: 3
     }, undefined);
 };
-_s(StepLine, "LPXKYgXSYk+F2lJWiRqaD1XIXI4=");
+_s(StepLine, "G0rMzPryLNB/yJnR4M8Q6Z+cDfk=");
 _c = StepLine;
 exports.default = StepLine;
 var _c;
@@ -71635,6 +71666,43 @@ $RefreshReg$(_c, "StepLine");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","@chakra-ui/react":"dTH6q","react":"21dqq","./stores":"bm3jH","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}]},["1xC6H","6FqiZ","4aBH6"], "4aBH6", "parcelRequire54f8")
+},{"react/jsx-dev-runtime":"iTorj","@chakra-ui/react":"dTH6q","react":"21dqq","./stores":"bm3jH","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"lBoXk":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$b856 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$b856.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("@chakra-ui/react");
+var _react1 = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react1);
+var _stores = require("../stepcore/stores");
+const Output = ()=>{
+    const [Steps] = (0, _stores.StepStore)((state)=>[
+            state.Steps
+        ]);
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.Textarea), {
+        defaultValue: "Hello",
+        value: JSON.stringify(Steps)
+    }, void 0, false, {
+        fileName: "src/components/output.tsx",
+        lineNumber: 9,
+        columnNumber: 3
+    }, undefined);
+};
+_c = Output;
+exports.default = Output;
+var _c;
+$RefreshReg$(_c, "Output");
+
+  $parcel$ReactRefreshHelpers$b856.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","@chakra-ui/react":"dTH6q","react":"21dqq","../stepcore/stores":"bm3jH","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}]},["1xC6H","6FqiZ","4aBH6"], "4aBH6", "parcelRequire54f8")
 
 //# sourceMappingURL=index.2d3ace14.js.map

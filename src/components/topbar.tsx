@@ -1,12 +1,12 @@
-import { Flex, IconButton, Text } from "@chakra-ui/react";
+import { Flex, IconButton, Text, useColorMode } from "@chakra-ui/react";
 import React from "react";
-import { SunIcon } from "../icons/icons";
+import { SunIcon, MoonIcon } from "../icons/icons";
 const TopBar = () => {
+	const { colorMode, toggleColorMode } = useColorMode()
 	return (
-		<Flex dir="row" justify="space-evenly" align="center" p="0.5rem">
-			<Text fontSize="2xl">UNIMAKERS</Text>
+		<Flex dir="row" align="center" justifyContent="space-between" p="0.5rem" bg={"blackAlpha.300"}>
 			<Text fontSize="2xl" fontWeight="bold">STEPGEN</Text>
-			<IconButton aria-label="light switch" icon={<SunIcon />} />
+			<IconButton onClick={toggleColorMode} aria-label="light switch" icon={colorMode == "dark" ? <SunIcon /> : <MoonIcon />} />
 		</Flex>
 	)
 }

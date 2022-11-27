@@ -14,10 +14,6 @@ interface StepState {
 	Pop: () => any,
 }
 
-export const Schema = [];
-
-
-
 export const StepStore = create<StepState>((set, get) => (
 	{
 		Schema: [],

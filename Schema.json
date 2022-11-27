@@ -16,11 +16,7 @@
 		"Func": "Rotate",
 		"Args": [
 			{
-				"Input": "X",
-				"Type": "number"
-			},
-			{
-				"Input": "Y",
+				"Input": "Alpha",
 				"Type": "number"
 			}
 		]

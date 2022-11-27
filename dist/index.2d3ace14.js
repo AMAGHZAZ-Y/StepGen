@@ -71562,45 +71562,67 @@ var _stores = require("./stores");
 var _s = $RefreshSig$();
 const StepLine = (props)=>{
     _s();
-    const [Steps, Schema] = (0, _stores.StepStore)((state)=>[
-            state.Steps,
+    const [Schema] = (0, _stores.StepStore)((state)=>[
             state.Schema
         ]);
     const [Choice, setChoice] = (0, _react1.useState)();
     const Funcs = [];
-    const Args = [];
+    let Args = [];
     Schema.forEach((e)=>{
         Funcs.push(e["Func"]);
     });
-    Schema.forEach((e)=>{
-        Args.push(e["Args"]);
-    });
     (0, _react1.useEffect)(()=>{
-        console.log(Choice);
+        console.log(Args);
     });
-    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
-        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.Select), {
-            placeholder: "Select Function",
-            value: Choice,
-            onChange: (e)=>{
-                setChoice(e.target.value);
-            },
-            children: Funcs.map((e, i)=>{
-                return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
-                    value: e,
-                    children: e
-                }, void 0, false, {
-                    fileName: "src/stepcore/stepline.tsx",
-                    lineNumber: 24,
-                    columnNumber: 15
-                }, undefined);
-            })
-        }, void 0, false, {
-            fileName: "src/stepcore/stepline.tsx",
-            lineNumber: 21,
-            columnNumber: 5
-        }, undefined)
-    }, void 0, false);
+    Schema.forEach((e)=>{
+        if (Choice == e["Func"]) Args = e["Args"];
+    });
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.Flex), {
+        children: [
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.Select), {
+                placeholder: "Select Function",
+                value: Choice,
+                onChange: (e)=>{
+                    setChoice(e.target.value);
+                },
+                children: Funcs.map((e, i)=>{
+                    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
+                        value: e,
+                        children: e
+                    }, void 0, false, {
+                        fileName: "src/stepcore/stepline.tsx",
+                        lineNumber: 28,
+                        columnNumber: 15
+                    }, undefined);
+                })
+            }, void 0, false, {
+                fileName: "src/stepcore/stepline.tsx",
+                lineNumber: 25,
+                columnNumber: 5
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.InputGroup), {
+                children: Args.map((e, i)=>{
+                    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.Input), {
+                        placeholder: e["Input"],
+                        type: e["Type"],
+                        textAlign: "center"
+                    }, void 0, false, {
+                        fileName: "src/stepcore/stepline.tsx",
+                        lineNumber: 35,
+                        columnNumber: 15
+                    }, undefined);
+                })
+            }, void 0, false, {
+                fileName: "src/stepcore/stepline.tsx",
+                lineNumber: 32,
+                columnNumber: 5
+            }, undefined)
+        ]
+    }, void 0, true, {
+        fileName: "src/stepcore/stepline.tsx",
+        lineNumber: 24,
+        columnNumber: 4
+    }, undefined);
 };
 _s(StepLine, "LPXKYgXSYk+F2lJWiRqaD1XIXI4=");
 _c = StepLine;

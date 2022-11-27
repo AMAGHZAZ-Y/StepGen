@@ -1,48 +1,33 @@
 import { Flex, Input, Select } from "@chakra-ui/react";
-import React, { useState } from "react";
-import { Schema } from "./stores";
+import React, { useEffect, useState } from "react";
+import {StepStore } from "./stores";
 
-const StepLine = () => {
-	let [Func, setFunc] = useState("");
-	let [Opts, setOpts] = useState(Element[""]);
-	if (process.env.NODE_ENV !== 'production') {
-		console.log("new StepLine")
-	}
-	const handleChange = (event) => {
-		setFunc(event.target.value);
-		let opts = Options()
-		setOpts(opts)
-	}
-	const Options = () => {
-		let opts: JSX.Element[] = [];
-		Schema.forEach(e => {
-			let opt = <option value={e}>{e}</ option>
-			opts.push(opt)
-		});
-		return opts
-	}
-	const Args = () => {
-		let args: JSX.Element[] = []
-		Schema[Func].forEach((e) => {
-			if (e == "output") return;
-			let arg = <Input type={e} />
-			args.push(arg);
+const StepLine = (props) => {
+		const [Steps, Schema] = StepStore((state)=>([state.Steps, state.Schema]))
+		const [Choice, setChoice] = useState<string>();
+		const Funcs = [];
+		const Args = [];
+		Schema.forEach((e)=>{
+			Funcs.push(e["Func"]);
 		})
-	}
-	return (
-		<Flex dir="row">
-			<Select placeholder="Select Function" value={Func} onChange={handleChange}>
-				{
-					Opts?.map((e) => {
-						return e
-					})
-				}
-			</Select>
-			{
+		Schema.forEach((e)=>{
+			Args.push(e["Args"]);
+		})
+		useEffect(()=>{
+			console.log(Choice)
+		})
+		return (
+			<>
+				<Select placeholder="Select Function" value={Choice} onChange={(e)=>{setChoice(e.target.value)}}>
+					{
+						Funcs.map((e,i)=>{
+							return <option value={e}>{e}</option>
+						})
+					}
+				</Select>
 
-			}
-		</Flex>
-	)
+			</>
+		)
 }
 
 export default StepLine

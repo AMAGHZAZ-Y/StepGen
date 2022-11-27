@@ -1,6 +1,6 @@
 import create from "zustand";
 
-export type Step = {
+export interface Step {
 	id: number,
 	func: string,
 	args: string[],
@@ -8,22 +8,21 @@ export type Step = {
 
 interface StepState {
 	Schema: [],
-	ParsedSchema: [],
-	StepCount: number,
 	Steps: Step[],
+	setSchema: (newSchema: []) => void,
 	Push: (step: Step) => any,
 	Pop: () => any,
-
 }
 
 export const Schema = [];
 
+
+
 export const StepStore = create<StepState>((set, get) => (
 	{
 		Schema: [],
-		ParsedSchema: [],
-		StepCount: 0,
 		Steps: [],
+		setSchema: (newSchema) => set(() => ({ Schema: newSchema })),
 		Push: (step) => set((state) => ({ Steps: [...state.Steps, step] })),
 		Pop: () => set((state) => ({ Steps: state.Steps.splice(1) }))
 	}

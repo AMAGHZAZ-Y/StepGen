@@ -5,4 +5,3 @@ const container = document.getElementById("app");
 const root = ReactDOM.createRoot(container as Element);
 
 root.render(<App />);
-

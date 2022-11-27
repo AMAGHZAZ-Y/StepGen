@@ -2,18 +2,26 @@ import { Button, Text, IconButton, Input, Modal, ModalCloseButton, ModalContent,
 import React, { useState } from "react";
 import { StepStore, Step } from "./stores";
 import { PlusIcon, DeleteIcon } from "../icons/icons";
-import { ParseSchema } from "./adapter";
 export const AddBtn = () => {
-	const [Step, setStep] = useState<Step>()
+	const [addSteps] = StepStore((state)=>([ state.Push]))
+	const click = ()=>{
+		const step: Step = {
+			id: 0,
+			func: "",
+			args: []
+		}
+		addSteps(step);
+	}
 	return (
-		<IconButton icon={<PlusIcon />} aria-label="add line" />
+		<IconButton onClick={click} icon={<PlusIcon />} aria-label="add line" />
 	)
 }
 
 export const DeleteBtn = () => {
 	let step: Step
+	const [Pop] = StepStore((state)=>([state.Pop]))
 	const click = () => {
-
+		Pop();
 	}
 	return (
 		<IconButton onClick={click} aria-label="Delete Button" icon={<DeleteIcon />} />
@@ -32,6 +40,7 @@ export const UploadBtn = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [File, setFile] = useState<string>()
 	const [Loaded, setLoaded] = useState(false);
+	const [setSchema] = StepStore((state)=>([state.setSchema]))
 	let toast = useToast();
 	const handleUpload = (event) => {
 		const reader = new FileReader();
@@ -42,9 +51,7 @@ export const UploadBtn = () => {
 		reader.readAsText(event.target.files[0])
 	}
 	const handleSubmit = () => {
-		StepStore.setState((state) =>
-			({ Schema: JSON.parse(File as string) }))
-		ParseSchema()
+		setSchema(JSON.parse(File as string))
 		toast({
 			duration: 2500,
 			title: "Upload Status",
@@ -53,7 +60,6 @@ export const UploadBtn = () => {
 		})
 		onClose()
 	}
-
 	return (
 		<>
 			<Button onClick={onOpen}>Upload</Button>

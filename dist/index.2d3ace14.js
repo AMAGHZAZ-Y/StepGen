@@ -70906,32 +70906,45 @@ var _react1 = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react1);
 var _stores = require("./stores");
 var _icons = require("../icons/icons");
-var _adapter = require("./adapter");
-var _s = $RefreshSig$(), _s1 = $RefreshSig$();
+var _s = $RefreshSig$();
 const AddBtn = ()=>{
-    _s();
-    const [Step, setStep] = (0, _react1.useState)();
+    const [addSteps] = (0, _stores.StepStore)((state)=>[
+            state.Push
+        ]);
+    const click = ()=>{
+        const step = {
+            id: 0,
+            func: "",
+            args: []
+        };
+        addSteps(step);
+    };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.IconButton), {
+        onClick: click,
         icon: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _icons.PlusIcon), {}, void 0, false, void 0, void 0),
         "aria-label": "add line"
     }, void 0, false, {
         fileName: "src/stepcore/buttons.tsx",
-        lineNumber: 9,
+        lineNumber: 16,
         columnNumber: 3
     }, undefined);
 };
-_s(AddBtn, "Bn7i9JkG7ta+5aXidad2xp1xpJ4=");
 _c = AddBtn;
 const DeleteBtn = ()=>{
     let step;
-    const click = ()=>{};
+    const [Pop] = (0, _stores.StepStore)((state)=>[
+            state.Pop
+        ]);
+    const click = ()=>{
+        Pop();
+    };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.IconButton), {
         onClick: click,
         "aria-label": "Delete Button",
         icon: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _icons.DeleteIcon), {}, void 0, false, void 0, void 0)
     }, void 0, false, {
         fileName: "src/stepcore/buttons.tsx",
-        lineNumber: 19,
+        lineNumber: 27,
         columnNumber: 3
     }, undefined);
 };
@@ -70941,16 +70954,19 @@ const GenerateBtn = ()=>{
         children: "Generate"
     }, void 0, false, {
         fileName: "src/stepcore/buttons.tsx",
-        lineNumber: 25,
+        lineNumber: 33,
         columnNumber: 3
     }, undefined);
 };
 _c2 = GenerateBtn;
 const UploadBtn = ()=>{
-    _s1();
+    _s();
     const { isOpen , onOpen , onClose  } = (0, _react.useDisclosure)();
     const [File, setFile] = (0, _react1.useState)();
     const [Loaded, setLoaded] = (0, _react1.useState)(false);
+    const [setSchema] = (0, _stores.StepStore)((state)=>[
+            state.setSchema
+        ]);
     let toast = (0, _react.useToast)();
     const handleUpload = (event)=>{
         const reader = new FileReader();
@@ -70961,10 +70977,7 @@ const UploadBtn = ()=>{
         reader.readAsText(event.target.files[0]);
     };
     const handleSubmit = ()=>{
-        (0, _stores.StepStore).setState((state)=>({
-                Schema: JSON.parse(File)
-            }));
-        (0, _adapter.ParseSchema)();
+        setSchema(JSON.parse(File));
         toast({
             duration: 2500,
             title: "Upload Status",
@@ -70980,7 +70993,7 @@ const UploadBtn = ()=>{
                 children: "Upload"
             }, void 0, false, {
                 fileName: "src/stepcore/buttons.tsx",
-                lineNumber: 59,
+                lineNumber: 65,
                 columnNumber: 4
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.Modal), {
@@ -70989,7 +71002,7 @@ const UploadBtn = ()=>{
                 children: [
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.ModalOverlay), {}, void 0, false, {
                         fileName: "src/stepcore/buttons.tsx",
-                        lineNumber: 61,
+                        lineNumber: 67,
                         columnNumber: 5
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.ModalContent), {
@@ -70998,12 +71011,12 @@ const UploadBtn = ()=>{
                                 children: "Upload Schema"
                             }, void 0, false, {
                                 fileName: "src/stepcore/buttons.tsx",
-                                lineNumber: 63,
+                                lineNumber: 69,
                                 columnNumber: 6
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.ModalCloseButton), {}, void 0, false, {
                                 fileName: "src/stepcore/buttons.tsx",
-                                lineNumber: 66,
+                                lineNumber: 72,
                                 columnNumber: 6
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.ModalBody), {
@@ -71013,7 +71026,7 @@ const UploadBtn = ()=>{
                                         children: "Please select your schema from your filesystem"
                                     }, void 0, false, {
                                         fileName: "src/stepcore/buttons.tsx",
-                                        lineNumber: 68,
+                                        lineNumber: 74,
                                         columnNumber: 7
                                     }, undefined),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.Input), {
@@ -71022,13 +71035,13 @@ const UploadBtn = ()=>{
                                         onChange: handleUpload
                                     }, void 0, false, {
                                         fileName: "src/stepcore/buttons.tsx",
-                                        lineNumber: 69,
+                                        lineNumber: 75,
                                         columnNumber: 7
                                     }, undefined)
                                 ]
                             }, void 0, true, {
                                 fileName: "src/stepcore/buttons.tsx",
-                                lineNumber: 67,
+                                lineNumber: 73,
                                 columnNumber: 6
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.ModalFooter), {
@@ -71038,30 +71051,30 @@ const UploadBtn = ()=>{
                                     children: "Submit"
                                 }, void 0, false, {
                                     fileName: "src/stepcore/buttons.tsx",
-                                    lineNumber: 72,
+                                    lineNumber: 78,
                                     columnNumber: 7
                                 }, undefined)
                             }, void 0, false, {
                                 fileName: "src/stepcore/buttons.tsx",
-                                lineNumber: 71,
+                                lineNumber: 77,
                                 columnNumber: 6
                             }, undefined)
                         ]
                     }, void 0, true, {
                         fileName: "src/stepcore/buttons.tsx",
-                        lineNumber: 62,
+                        lineNumber: 68,
                         columnNumber: 5
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/stepcore/buttons.tsx",
-                lineNumber: 60,
+                lineNumber: 66,
                 columnNumber: 4
             }, undefined)
         ]
     }, void 0, true);
 };
-_s1(UploadBtn, "a3Q+2iOZFrXNQ2VJEuOtxhgPIg0=", false, function() {
+_s(UploadBtn, "a3Q+2iOZFrXNQ2VJEuOtxhgPIg0=", false, function() {
     return [
         (0, _react.useDisclosure),
         (0, _react.useToast)
@@ -71073,7 +71086,7 @@ const SimulateBtn = ()=>{
         children: "Simulate"
     }, void 0, false, {
         fileName: "src/stepcore/buttons.tsx",
-        lineNumber: 81,
+        lineNumber: 87,
         columnNumber: 3
     }, undefined);
 };
@@ -71090,7 +71103,7 @@ $RefreshReg$(_c4, "SimulateBtn");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","@chakra-ui/react":"dTH6q","react":"21dqq","../icons/icons":"8Fw3R","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./stores":"bm3jH","./adapter":"376nN"}],"bm3jH":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","@chakra-ui/react":"dTH6q","react":"21dqq","../icons/icons":"8Fw3R","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./stores":"bm3jH"}],"bm3jH":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Schema", ()=>Schema);
@@ -71100,9 +71113,10 @@ var _zustandDefault = parcelHelpers.interopDefault(_zustand);
 const Schema = [];
 const StepStore = (0, _zustandDefault.default)((set, get)=>({
         Schema: [],
-        ParsedSchema: [],
-        StepCount: 0,
         Steps: [],
+        setSchema: (newSchema)=>set(()=>({
+                    Schema: newSchema
+                })),
         Push: (step)=>set((state)=>({
                     Steps: [
                         ...state.Steps,
@@ -71485,20 +71499,7 @@ module.exports = require("../cjs/use-sync-external-store-shim.development.js");
     /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */ if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop === "function") __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
 })();
 
-},{"react":"21dqq"}],"376nN":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "ParseSchema", ()=>ParseSchema);
-var _stores = require("./stores");
-const ParseSchema = ()=>{
-    let schema = (0, _stores.StepStore).getState().Schema;
-    let parsed = [];
-    schema.map((e, i)=>{
-        let obj = e["Func"] == "Move" ? e[i] : null;
-    });
-};
-
-},{"./stores":"bm3jH","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bY16q":[function(require,module,exports) {
+},{"react":"21dqq"}],"bY16q":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$29f2 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -71510,9 +71511,30 @@ parcelHelpers.defineInteropFlag(exports);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
+var _stepline = require("../stepcore/stepline");
+var _steplineDefault = parcelHelpers.interopDefault(_stepline);
+var _stores = require("../stepcore/stores");
+var _s = $RefreshSig$();
 const Lines = ()=>{
-    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {}, void 0, false);
+    _s();
+    const [Steps, setSteps] = (0, _stores.StepStore)((state)=>[
+            state.Steps,
+            state.Push
+        ]);
+    (0, _react.useEffect)(()=>{
+        console.log(Steps);
+    });
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
+        children: Steps.map((e, i)=>{
+            return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _steplineDefault.default), {}, void 0, false, {
+                fileName: "src/components/lines.tsx",
+                lineNumber: 14,
+                columnNumber: 13
+            }, undefined);
+        })
+    }, void 0, false);
 };
+_s(Lines, "OD7bBpZva5O2jO+Puf00hKivP7c=");
 _c = Lines;
 exports.default = Lines;
 var _c;
@@ -71523,6 +71545,74 @@ $RefreshReg$(_c, "Lines");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}]},["1xC6H","6FqiZ","4aBH6"], "4aBH6", "parcelRequire54f8")
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","../stepcore/stores":"bm3jH","../stepcore/stepline":"ioBzp"}],"ioBzp":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$4a4f = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$4a4f.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("@chakra-ui/react");
+var _react1 = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react1);
+var _stores = require("./stores");
+var _s = $RefreshSig$();
+const StepLine = (props)=>{
+    _s();
+    const [Steps, Schema] = (0, _stores.StepStore)((state)=>[
+            state.Steps,
+            state.Schema
+        ]);
+    const [Choice, setChoice] = (0, _react1.useState)();
+    const Funcs = [];
+    const Args = [];
+    Schema.forEach((e)=>{
+        Funcs.push(e["Func"]);
+    });
+    Schema.forEach((e)=>{
+        Args.push(e["Args"]);
+    });
+    (0, _react1.useEffect)(()=>{
+        console.log(Choice);
+    });
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
+        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.Select), {
+            placeholder: "Select Function",
+            value: Choice,
+            onChange: (e)=>{
+                setChoice(e.target.value);
+            },
+            children: Funcs.map((e, i)=>{
+                return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
+                    value: e,
+                    children: e
+                }, void 0, false, {
+                    fileName: "src/stepcore/stepline.tsx",
+                    lineNumber: 24,
+                    columnNumber: 15
+                }, undefined);
+            })
+        }, void 0, false, {
+            fileName: "src/stepcore/stepline.tsx",
+            lineNumber: 21,
+            columnNumber: 5
+        }, undefined)
+    }, void 0, false);
+};
+_s(StepLine, "LPXKYgXSYk+F2lJWiRqaD1XIXI4=");
+_c = StepLine;
+exports.default = StepLine;
+var _c;
+$RefreshReg$(_c, "StepLine");
+
+  $parcel$ReactRefreshHelpers$4a4f.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","@chakra-ui/react":"dTH6q","react":"21dqq","./stores":"bm3jH","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}]},["1xC6H","6FqiZ","4aBH6"], "4aBH6", "parcelRequire54f8")
 
 //# sourceMappingURL=index.2d3ace14.js.map

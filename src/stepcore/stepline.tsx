@@ -1,10 +1,12 @@
-import { Flex, Input, InputGroup, InputLeftAddon, Select } from "@chakra-ui/react";
+import { Button, Flex, Input, InputGroup, InputLeftAddon, Select } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { StepStore } from "./stores";
+import { Step, StepStore } from "./stores";
 
 const StepLine = (props) => {
-	const [Schema] = StepStore((state) => ([state.Schema]))
+	let step: Step;
+	const [Steps, Schema] = StepStore((state) => ([state.Steps, state.Schema]))
 	const [Choice, setChoice] = useState<string>();
+	const [Step, setStep] = useState<Step>()
 	const Funcs = [];
 	let Args = [];
 	Schema.forEach((e) => {
@@ -16,8 +18,22 @@ const StepLine = (props) => {
 		}
 	})
 
+	const check = () => {
+		let args: string[] = [];
+		let inputs = document.getElementById(props.step as string)?.querySelectorAll("input")
+		inputs?.forEach((e) => {
+			if (e.value) args.push(e.value)
+		})
+		setStep({
+			id: props.step,
+			func: Choice as string,
+			args: args
+		})
+		console.log(Step)
+	}
+
 	return (
-		<Flex gap="0.2rem" p="0.2rem">
+		<Flex gap="0.2rem" p="0.2rem" onChange={check} id={props.step}>
 			<Select placeholder="Select Function" value={Choice} onChange={(e) => { setChoice(e.target.value) }} variant={"filled"}>
 				{
 					Funcs.map((e, i) => {
@@ -28,7 +44,7 @@ const StepLine = (props) => {
 			<Flex gap="0.2rem">
 				{
 					Args.map((e, i) => {
-						return <Input variant={"outline"} placeholder={e["Input"]} type={e["Type"]} textAlign="center" key={i} />
+						return <Input name="inputline" variant={"outline"} placeholder={e["Input"]} type={e["Type"]} textAlign="center" key={i} />
 					})
 				}
 			</Flex>

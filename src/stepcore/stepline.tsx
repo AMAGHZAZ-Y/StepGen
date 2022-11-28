@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Step, StepStore } from "./stores";
 
 const StepLine = (props) => {
-	let step: Step;
-	const [Steps, Schema] = StepStore((state) => ([state.Steps, state.Schema]))
+	const [Schema] = StepStore((state) => ([state.Schema]))
+	const [Steps, setSteps] = StepStore((state) => ([state.Steps, state.setSteps]))
 	const [Choice, setChoice] = useState<string>();
 	const [Step, setStep] = useState<Step>()
 	const Funcs = [];
@@ -20,6 +20,7 @@ const StepLine = (props) => {
 
 	const check = () => {
 		let args: string[] = [];
+		let steps = [...Steps];
 		let inputs = document.getElementById(props.step as string)?.querySelectorAll("input")
 		inputs?.forEach((e) => {
 			if (e.value) args.push(e.value)
@@ -29,7 +30,8 @@ const StepLine = (props) => {
 			func: Choice as string,
 			args: args
 		})
-		console.log(Step)
+		steps[props.step] = Step as Step;
+		setSteps(steps);
 	}
 
 	return (

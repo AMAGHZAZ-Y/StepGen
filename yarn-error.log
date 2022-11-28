@@ -2,7 +2,7 @@ Arguments:
   /home/kurhnel/.nvm/versions/node/v18.12.0/bin/node /home/kurhnel/.cache/node/corepack/yarn/1.22.19/bin/yarn.js
 
 PATH: 
-  /home/kurhnel/.local/share/pnpm:/home/kurhnel/.local/share/pnpm:/home/kurhnel/.nvm/versions/node/v18.12.0/bin:/home/kurhnel/.cargo/bin:/home/kurhnel/.local/share/pnpm:/home/kurhnel/.local/bin:/home/kurhnel/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/var/lib/snapd/snap/bin:/usr/local/go/bin:/home/kurhnel/.dotnet/tools:/usr/local/go/bin:/home/kurhnel/.local/share/JetBrains/Toolbox/scripts:/usr/local/go/bin:/usr/local/go/bin:/home/kurhnel/.local/share/JetBrains/Toolbox/scripts:/usr/local/go/bin
+  /home/kurhnel/.local/share/pnpm:/home/kurhnel/.deno/bin:/home/kurhnel/.local/share/pnpm:/home/kurhnel/.deno/bin:/home/kurhnel/.nvm/versions/node/v18.12.0/bin:/home/kurhnel/.local/share/pnpm:/home/kurhnel/.deno/bin:/home/kurhnel/.local/bin:/home/kurhnel/bin:/home/kurhnel/.cargo/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/var/lib/snapd/snap/bin:/usr/local/go/bin:/home/kurhnel/.local/share/JetBrains/Toolbox/scripts:/usr/local/go/bin:/home/kurhnel/.dotnet/tools:/usr/local/go/bin:/home/kurhnel/.local/share/JetBrains/Toolbox/scripts:/usr/local/go/bin:/usr/local/go/bin:/home/kurhnel/.local/share/JetBrains/Toolbox/scripts:/usr/local/go/bin
 
 Yarn version: 
   1.22.19
@@ -25,26 +25,27 @@ npm manifest:
     "source": "src/index.html",
     "scripts": {
       "start": "parcel",
-      "build": "parcel build"
+      "build": "rm -rf dist && parcel build"
     },
     "license": "MIT",
     "devDependencies": {
+      "@chakra-ui/react": "^2.4.1",
+      "@emotion/react": "^11.10.5",
+      "@emotion/styled": "^11.10.5",
       "@types/react": "^18.0.25",
       "@types/react-dom": "^18.0.9",
+      "framer-motion": "^7.6.9",
       "parcel": "^2.8.0",
       "process": "^0.11.10",
       "react": "^18.2.0",
       "react-dom": "^18.2.0",
-      "typescript": "^4.9.3",
-      "@chakra-ui/react": "^2.4.1",
-      "@emotion/react": "^11.10.5",
-      "@emotion/styled": "^11.10.5",
-      "framer-motion": "^7.6.9"
+      "@types/node": "^18.11.9",
+      "zustand": "^4.1.4",
+      "typescript": "^4.9.3"
     },
     "engines": {
       "parcel": "2.x"
-    },
-    "dependencies": {}
+    }
   }
 
 yarn manifest: 

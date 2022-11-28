@@ -15,6 +15,7 @@ interface StepState {
 	setSchema: (newSchema: []) => void,
 	Push: (step: Step) => any,
 	Pop: () => any,
+	setSteps: (steps: Step[]) => any,
 }
 
 export const StepStore = create<StepState>((set, get) => (
@@ -26,6 +27,7 @@ export const StepStore = create<StepState>((set, get) => (
 		decrement: () => set((state) => ({ StepCount: state.StepCount - 1 })),
 		setSchema: (newSchema) => set(() => ({ Schema: newSchema })),
 		Push: (step) => set((state) => ({ Steps: [...state.Steps, step] })),
-		Pop: () => set((state) => ({ Steps: state.Steps.splice(1) }))
+		Pop: () => set((state) => ({ Steps: state.Steps.splice(1) })),
+		setSteps: (steps) => { set(() => ({ Steps: steps })) }
 	}
 ))

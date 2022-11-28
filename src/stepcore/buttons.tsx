@@ -1,24 +1,25 @@
-import { Button, Text, IconButton, Input, Modal, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useDisclosure, ModalBody, ModalFooter, useToast } from "@chakra-ui/react";
+import { Button, Text, IconButton, Tooltip, Input, Modal, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useDisclosure, ModalBody, ModalFooter, useToast } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { StepStore, Step } from "./stores";
 import { PlusIcon, DeleteIcon } from "../icons/icons";
 export const AddBtn = () => {
 	const [addStep] = StepStore((state) => ([state.increment]))
+	const [Schema] = StepStore((state) => ([state.Schema]))
 	const click = () => {
-		const step: Step = {
-			id: 0,
-			func: "",
-			args: []
-		}
 		addStep();
 	}
+	const label = (Schema == null) ? "No Schema" : "Click Here to add a new line"
 	return (
-		<IconButton onClick={click} icon={<PlusIcon />} aria-label="add line" />
+		<>
+			<Tooltip label={label}>
+				<IconButton onClick={click} icon={<PlusIcon />} aria-label="add line" disabled={(Schema == null)} />
+
+			</Tooltip>
+		</>
 	)
 }
 
 export const DeleteBtn = () => {
-	let step: Step
 	const [Pop, Decrement, Count] = StepStore((state) => ([state.Pop, state.decrement, state.StepCount]))
 	const click = () => {
 		Pop();

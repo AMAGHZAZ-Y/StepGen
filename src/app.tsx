@@ -1,5 +1,6 @@
 import { ChakraProvider, Grid, GridItem, Divider } from "@chakra-ui/react"
 import React from "react"
+import Footer from "./components/footer"
 import Lines from "./components/lines"
 import Output from "./components/output"
 import ToolKit from "./components/toolkit"
@@ -13,7 +14,7 @@ const App = () => {
 			<TopBar />
 			<ToolKit />
 			<Grid templateColumns="1fr 1fr" gap="1rem">
-				<GridItem colStart={1}>
+				<GridItem colStart={1} p="1rem">
 					<Lines />
 				</GridItem>
 				<GridItem colStart={2}>

@@ -3,14 +3,14 @@ import React, { useState } from "react";
 import { StepStore, Step } from "./stores";
 import { PlusIcon, DeleteIcon } from "../icons/icons";
 export const AddBtn = () => {
-	const [addSteps] = StepStore((state)=>([ state.Push]))
-	const click = ()=>{
+	const [addStep] = StepStore((state) => ([state.increment]))
+	const click = () => {
 		const step: Step = {
 			id: 0,
 			func: "",
 			args: []
 		}
-		addSteps(step);
+		addStep();
 	}
 	return (
 		<IconButton onClick={click} icon={<PlusIcon />} aria-label="add line" />
@@ -19,9 +19,10 @@ export const AddBtn = () => {
 
 export const DeleteBtn = () => {
 	let step: Step
-	const [Pop] = StepStore((state)=>([state.Pop]))
+	const [Pop, Decrement, Count] = StepStore((state) => ([state.Pop, state.decrement, state.StepCount]))
 	const click = () => {
 		Pop();
+		if (Count > 0) Decrement();
 	}
 	return (
 		<IconButton onClick={click} aria-label="Delete Button" icon={<DeleteIcon />} />
@@ -40,7 +41,7 @@ export const UploadBtn = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [File, setFile] = useState<string>()
 	const [Loaded, setLoaded] = useState(false);
-	const [setSchema] = StepStore((state)=>([state.setSchema]))
+	const [setSchema] = StepStore((state) => ([state.setSchema]))
 	let toast = useToast();
 	const handleUpload = (event) => {
 		const reader = new FileReader();

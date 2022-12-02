@@ -10,12 +10,13 @@ interface StepState {
 	StepCount: number,
 	Schema: [],
 	Steps: Step[],
+	CSV: string[],
 	increment: () => void,
 	decrement: () => void,
 	setSchema: (newSchema: []) => void,
-	Push: (step: Step) => any,
 	Pop: () => any,
 	setSteps: (steps: Step[]) => any,
+	setCSV: (newCSV: string[]) => void
 }
 
 export const StepStore = create<StepState>((set, get) => (
@@ -23,11 +24,12 @@ export const StepStore = create<StepState>((set, get) => (
 		StepCount: 0,
 		Schema: [],
 		Steps: [],
+		CSV: [],
 		increment: () => set((state) => ({ StepCount: state.StepCount + 1 })),
 		decrement: () => set((state) => ({ StepCount: state.StepCount - 1 })),
 		setSchema: (newSchema) => set(() => ({ Schema: newSchema })),
-		Push: (step) => set((state) => ({ Steps: [...state.Steps, step] })),
 		Pop: () => set((state) => ({ Steps: state.Steps.splice(1) })),
-		setSteps: (steps) => { set(() => ({ Steps: steps })) }
+		setSteps: (steps) => set(() => ({ Steps: steps })),
+		setCSV: (newCSV) => set(() => ({ CSV: newCSV }))
 	}
 ))

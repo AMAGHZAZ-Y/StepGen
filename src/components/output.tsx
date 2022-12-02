@@ -1,9 +1,9 @@
-import { TabList, Tabs, Textarea, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
+import { TabList, Tabs, Textarea, Tab, TabPanels, TabPanel, Flex } from "@chakra-ui/react";
 import React from "react";
 import { StepStore } from "../stepcore/stores";
 
 const Output = () => {
-	const [Steps] = StepStore((state) => ([state.Steps]))
+	const [Steps, CSV] = StepStore((state) => ([state.Steps, state.CSV]))
 
 	return (
 		<Tabs>
@@ -23,8 +23,7 @@ const Output = () => {
 			</TabList>
 			<TabPanels>
 				<TabPanel>
-					<div>CSV output goes here...</div>
-					<div>+ Button to download it</div>
+					<Flex direction={"column"}>{CSV}</Flex>
 				</TabPanel>
 				<TabPanel>
 					<div>Simulation goes in here...</div>

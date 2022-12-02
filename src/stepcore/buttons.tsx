@@ -2,6 +2,7 @@ import { Button, Text, IconButton, Tooltip, Input, Modal, ModalCloseButton, Moda
 import React, { useState } from "react";
 import { StepStore, Step } from "./stores";
 import { PlusIcon, DeleteIcon } from "../icons/icons";
+import { stat } from "fs";
 export const AddBtn = () => {
 	const [addStep] = StepStore((state) => ([state.increment]))
 	const [Schema] = StepStore((state) => ([state.Schema]))
@@ -13,7 +14,6 @@ export const AddBtn = () => {
 		<>
 			<Tooltip label={label}>
 				<IconButton onClick={click} icon={<PlusIcon />} aria-label="add line" disabled={(Schema == null)} />
-
 			</Tooltip>
 		</>
 	)
@@ -31,8 +31,21 @@ export const DeleteBtn = () => {
 }
 
 export const GenerateBtn = () => {
+	const [StepCount, Steps, setCSV] = StepStore((state) => ([state.StepCount, state.Steps, state.setCSV]))
+	const ParseSteps = () => {
+		let csv: string[] = []
+		Steps.forEach(e => {
+			let str = `${e.id} - ${e.func}`
+			e["args"].forEach((e) => {
+				str = str.concat(` - ${e}`)
+			})
+			csv.push(str);
+		})
+		console.log(csv)
+		setCSV(csv);
+	}
 	return (
-		<Button>
+		<Button onClick={ParseSteps} disabled={(StepCount == 0)}>
 			Generate
 		</Button>
 	)
@@ -86,8 +99,9 @@ export const UploadBtn = () => {
 	)
 }
 export const SimulateBtn = () => {
+	const [StepCount] = StepStore((state) => ([state.StepCount]))
 	return (
-		<Button>
+		<Button disabled={(StepCount == 0)}>
 			Simulate
 		</Button>
 	)
